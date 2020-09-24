@@ -1,0 +1,30 @@
+### exported: Thu Sep 24 16:56:27 2020
+### from:     Arnold 6.0.4.0 [3fad32b9] linux clang-9.0.1 oiio-2.2.1 osl-1.11.6 vdb-4.0.0 clm-1.1.1.118 rlm-12.4.2 optix-6.6.0 2020/07/31 08:04:58
+
+
+
+options
+{
+ xres 256
+ yres 256
+ camera "/nodes/camera01"
+}
+
+persp_camera
+{
+ name /nodes/camera01
+ position 0 0 1.10000002
+ look_at 0 0 0
+}
+
+sphere
+{
+ name /nodes/sphere01
+ shader "/nodes/surface"
+}
+
+standard_surface
+{
+ name /nodes/surface
+}
+

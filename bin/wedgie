@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+import sys
+import argparse
+from wedgie import Render
+from wedgie.arguments import DefaultFrameAction, ParamInterpolationArg
+from collections import namedtuple
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="wedgie")
+    parser.add_argument(
+        "mode",
+        choices=["render", "batch", "submit"],
+        help="Mode to run in ",
+    )
+
+    parser.add_argument(
+        "-i",
+        "--infile",
+        required=True,
+        type=str,
+        help="Input scene file",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--outfile",
+        type=str,
+        default="default",
+        help="Output image name",
+    )
+
+    parser.add_argument(
+        "-s",
+        "--start-frame",
+        type=int,
+        default=0,
+        action=DefaultFrameAction,
+        help="Start Frame",
+    )
+
+    parser.add_argument(
+        "-e",
+        "--end-frame",
+        type=int,
+        default=25,
+        help="End Frame",
+    )
+
+    parser.add_argument(
+        "-f",
+        "--frame",
+        default=0,
+        type=int,
+        help="End Frame",
+    )
+
+    parser.add_argument(
+        "-p",
+        "--parameter-interpolation",
+        type=ParamInterpolationArg.from_string,
+        action="append",
+        help="specify a paremeter interpolation",
+    )
+
+    args = parser.parse_args()
+    process = None
+    if args.mode == "render":
+        render = Render.from_args(args)
+        render(args.frame)
+    elif args.mode == "batch":
+        for f in range(args.start_frame, args.end_frame + 1):
+            render = Render.from_args(args)
+            render(f)
+    else:
+        raise NotImplementedError("mode: {}, is not implemented yet".format(args.mode))
